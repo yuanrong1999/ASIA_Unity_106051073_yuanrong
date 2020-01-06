@@ -9,8 +9,8 @@ public class Monster_ctl : MonoBehaviour
     [Tooltip("旋轉ㄉ速度"), Range(1.5f, 200f)]
     public float turn = 20.5f;
 
-    [Tooltip("完成任務")]
-    public bool mission;
+    /*[Tooltip("完成任務")]
+    public bool mission;*/
     [Tooltip("玩家名稱")]
     public string _name = "Oni";
     public Transform tran;
@@ -30,6 +30,7 @@ public class Monster_ctl : MonoBehaviour
         Run();
         Bark();
         Catch();
+        Jump();
     }
 
     // 觸發碰撞時持續執行 (一秒直行約60次) 碰撞物件資訊
@@ -67,7 +68,7 @@ public class Monster_ctl : MonoBehaviour
         // Time.deltaTime 當下裝置一幀的時間
         rig.AddForce(tran.forward * speed * v * Time.deltaTime);     // 區域座標
 
-        ani.SetBool("走路開關", v != 0);
+        ani.SetBool("走路", v != 0);
     }
 
     /// <summary>
@@ -87,7 +88,7 @@ public class Monster_ctl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             // 按下空白鍵拍翅膀
-            ani.SetTrigger("拍翅膀觸發器");
+            ani.SetTrigger("咬");
             // 音源.播放一次音效(音效，音量)
             aud.PlayOneShot(soundBark, 0.6f);
         }
@@ -101,7 +102,21 @@ public class Monster_ctl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             // 按下左鍵撿東西
-            ani.SetTrigger("撿東西觸發器");
+            ani.SetTrigger("Attack 01");
+        }
+    }
+
+    /// <summary>
+    /// 跳躍
+    /// </summary>
+    private void Jump()
+    {
+        // 如果 動畫 為 撿東西 就 跳出
+        //if (ani.GetCurrentAnimatorStateInfo(0).IsName("Attack 01")) return;
+
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            ani.SetTrigger("Jump");
         }
     }
 
