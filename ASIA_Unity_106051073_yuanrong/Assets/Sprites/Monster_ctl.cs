@@ -36,19 +36,18 @@ public class Monster_ctl : MonoBehaviour
     // 觸發碰撞時持續執行 (一秒直行約60次) 碰撞物件資訊
     private void OnTriggerStay(Collider other)
     {
-        // 如果 碰撞物件的名稱 為 雞腿 並且 動畫為撿東西
-        if (other.name == "雞腿" && ani.GetCurrentAnimatorStateInfo(0).IsName("撿東西"))
+        // 如果 碰撞物件的名稱 為 禮物 並且 動畫為咬
+        if (other.name == "禮物" && ani.GetCurrentAnimatorStateInfo(0).IsName("咬"))
         {
             // 物理.忽略碰撞(A碰撞，B碰撞)
             Physics.IgnoreCollision(other, GetComponent<Collider>());
             // 碰撞物件.取得元件<泛型>().連接身體 = 檢物品位置
             other.GetComponent<HingeJoint>().connectedBody = rigCatch;
         }
-
-        if (other.name == "沙子" && ani.GetCurrentAnimatorStateInfo(0).IsName("撿東西"))
+        /**if (other.name == "沙子" && ani.GetCurrentAnimatorStateInfo(0).IsName("撿東西"))
         {
             GameObject.Find("雞腿").GetComponent<HingeJoint>().connectedBody = null;
-        }
+        }*/
     }
 
     #region 方法區域
